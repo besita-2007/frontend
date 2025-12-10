@@ -1,0 +1,25 @@
+.confirm-container {
+  width: 90%;
+  max-width: 450px;
+  margin: 40px auto;
+  text-align: center;
+  font-family: Arial;
+}
+
+.ticket-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  background: #fafafa;
+}
+
+.home-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
