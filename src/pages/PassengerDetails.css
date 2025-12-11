@@ -1,8 +1,4 @@
-.register-container {
-  width: 90%;
-  max-width: 400px;
-  margin: 60px auto;
-  text-align: center;
+.passenger-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -10,43 +6,50 @@
   background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%);
 }
 
-.register-card {
+.passenger-card {
   background: white;
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   width: 100%;
-  max-width: 350px;
+  max-width: 500px;
   text-align: center;
 }
 
-.register-card h2 {
+.passenger-card h2 {
   color: #0d6efd;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
-.register-form {
+.passenger-info {
+  margin-bottom: 24px;
+  color: #555;
+}
+
+.passenger-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px;
 }
 
-.register-input {
-  width: 100%;
+.passenger-seat {
+  border: 1px solid #eee;
+  border-radius: 8px;
   padding: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+}
+
+.passenger-input {
+  width: 48%;
+  padding: 10px;
+  margin: 0 1% 0 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
 }
 
-.register-form input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-}
-
-.register-btn {
+.passenger-btn {
   width: 100%;
   padding: 12px;
   background: #0d6efd;
@@ -58,6 +61,6 @@
   transition: background 0.2s;
 }
 
-.register-btn:hover {
+.passenger-btn:hover {
   background: #004fb3;
 }

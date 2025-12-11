@@ -1,60 +1,37 @@
-import { useState } from "react";
-import "./SearchBus.css";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./SearchBus.css";
 
 function SearchBus() {
-  const navigate = useNavigate();
-
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
+  const navigate = useNavigate();
 
-  const searchBuses = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-
     if (!from || !to || !date) {
-      alert("Please fill all fields");
+      alert("Please fill From, To and Date");
       return;
     }
-
-    // Navigate to Bus List page
-    navigate("/bus-list", {
-      state: { from, to, date },
-    });
+    // Save search params to localStorage for BusList to access
+    localStorage.setItem("searchFrom", from);
+    localStorage.setItem("searchTo", to);
+    localStorage.setItem("searchDate", date);
+    navigate("/buses");
   };
 
   return (
-    <div className="search-container">
-      <h2>Search Buses</h2>
-
-      <form className="search-form" onSubmit={searchBuses}>
-        <label>From</label>
-        <input
-          type="text"
-          placeholder="Enter starting point"
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
-        />
-
-        <label>To</label>
-        <input
-          type="text"
-          placeholder="Enter destination"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-        />
-
-        <label>Date of Journey</label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-
-        <button type="submit" className="search-btn">
-          Search
-        </button>
-      </form>
+    <div className="searchbus-container">
+      <div className="searchbus-card">
+        <h2>Search Bus</h2>
+        <form onSubmit={submit}>
+          <input value={from} onChange={(e)=>setFrom(e.target.value)} type="text" placeholder="From" className="searchbus-input" />
+          <input value={to} onChange={(e)=>setTo(e.target.value)} type="text" placeholder="To" className="searchbus-input" />
+          <input value={date} onChange={(e)=>setDate(e.target.value)} type="date" className="searchbus-input" />
+          <button type="submit" className="searchbus-btn">Search Buses</button>
+        </form>
+      </div>
     </div>
   );
 }

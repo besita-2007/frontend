@@ -1,47 +1,40 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const loginUser = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-
-    if (!email || !password) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    alert("Login Successful!");
-    navigate("/");
+    alert("User Login Success!");
+    navigate("/search");
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-
-      <form className="login-form" onSubmit={loginUser}>
-        <label>Email</label>
-        <input 
-          type="email" 
-          placeholder="Enter email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <label>Password</label>
-        <input 
-          type="password" 
-          placeholder="Enter password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button className="login-btn">Login</button>
-      </form>
+      <div className="login-card">
+        <h2>Login</h2>
+        <form onSubmit={submit}>
+          <input 
+            type="email" 
+            placeholder="Email" 
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            className="login-input"
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+            className="login-input"
+          />
+          <button type="submit" className="login-btn">Login</button>
+        </form>
+      </div>
     </div>
   );
 }
