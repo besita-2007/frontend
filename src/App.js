@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AdminLogin from "./pages/AdminLogin";
@@ -16,15 +16,14 @@ import RequireAdmin from "./components/RequireAdmin";
 function App() {
   return (
     <Router>
+       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
 
-        {/* User login */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Admin routes */}
         <Route path="/admin" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
@@ -35,7 +34,6 @@ function App() {
           }
         />
 
-        {/* Booking flow - dynamic routes */}
         <Route path="/search" element={<SearchBus />} />
         <Route path="/buses" element={<BusList />} />
         <Route path="/seats/:busId" element={<SeatSelection />} />
