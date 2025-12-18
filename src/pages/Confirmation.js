@@ -1,13 +1,12 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./Confirmation.css"; // // Import CSS
+import "./Confirmation.css";
 
 function Confirmation() {
   const { bookingId } = useParams();
   const navigate = useNavigate();
   const confirmationData = JSON.parse(localStorage.getItem(`confirmation-${bookingId}`) || "{}"); //
 
-  // If user opens the page directly without booking
   if (!confirmationData.bus) {
     return (
       <div className="confirm-container" style={{ marginTop: "40px" }}>
@@ -27,10 +26,10 @@ function Confirmation() {
   } = confirmationData;
 
   return (
-    <div className="confirm-container"> // Apply class
+    <div className="confirm-container"> 
       <h1 style={{ color: "green" }}>🎉 Ticket Booked Successfully!</h1>
 
-      <div className="ticket-box"> // Apply class
+      <div className="ticket-box">
         <h2>Booking Details</h2>
 
         <p><strong>Bus Name:</strong> {bus.name || bus.number}</p>
@@ -44,7 +43,7 @@ function Confirmation() {
 
       <button
         onClick={() => navigate("/")}
-        className="home-btn" // Apply class
+        className="home-btn" 
       >
         Go Home
       </button>

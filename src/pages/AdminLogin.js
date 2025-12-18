@@ -9,11 +9,8 @@ function AdminLogin() {
 
   const submit = (e) => {
     e.preventDefault();
-    // Replace this with real auth (API call)
     if (adminId === "admin" && password === "admin123") {
-      // Save something to indicate admin is logged in (localStorage, context, or global store)
       localStorage.setItem("isAdmin", "true");
-      // Redirect to protected admin dashboard
       navigate("/admin/dashboard");
     } else {
       alert("Invalid Admin Credentials!");

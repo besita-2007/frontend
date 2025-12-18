@@ -5,7 +5,6 @@ export default function AdminDashboard() {
     <div style={{padding:40}}>
       <h1>Admin Dashboard</h1>
       <p>Only visible to logged-in admins.</p>
-      {/* Add admin controls here */}
     </div>
   );
 }

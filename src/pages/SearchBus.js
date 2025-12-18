@@ -14,7 +14,6 @@ function SearchBus() {
       alert("Please fill From, To and Date");
       return;
     }
-    // Save search params to localStorage for BusList to access
     localStorage.setItem("searchFrom", from);
     localStorage.setItem("searchTo", to);
     localStorage.setItem("searchDate", date);
@@ -26,10 +25,32 @@ function SearchBus() {
       <div className="searchbus-card">
         <h2>Search Bus</h2>
         <form onSubmit={submit}>
-          <input value={from} onChange={(e)=>setFrom(e.target.value)} type="text" placeholder="From" className="searchbus-input" />
-          <input value={to} onChange={(e)=>setTo(e.target.value)} type="text" placeholder="To" className="searchbus-input" />
-          <input value={date} onChange={(e)=>setDate(e.target.value)} type="date" className="searchbus-input" />
-          <button type="submit" className="searchbus-btn">Search Buses</button>
+          <input
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            type="text"
+            placeholder="From"
+            className="searchbus-input"
+          />
+
+          <input
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            type="text"
+            placeholder="To"
+            className="searchbus-input"
+          />
+
+          <input
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            type="date"
+            className="searchbus-input"
+          />
+
+          <button type="submit" className="searchbus-btn">
+            Search Buses
+          </button>
         </form>
       </div>
     </div>

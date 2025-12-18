@@ -14,7 +14,7 @@ function Login() {
 
   const onSubmit = (data) => {
     alert(`User Login Success for ${data.email}!`);
-    navigate("/search");
+    navigate("/searchbus");
   };
 
   return (
