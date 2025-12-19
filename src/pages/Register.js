@@ -1,35 +1,67 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const submit = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const submit = async (e) => {
     e.preventDefault();
-    alert("Registered Successfully!");
+
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Registration successful!");
     navigate("/login");
   };
 
   return (
-    <div className="register-container">
-      <div className="register-card">
-        <h2>Register</h2>
-        <form onSubmit={submit}>
-          <input 
-            type="text" 
-            placeholder="Full Name"
-            value={name}
-            onChange={(e)=>setName(e.target.value)}
-            className="register-input"
-          />
-          <input type="email" placeholder="Email" className="register-input" />
-          <input type="password" placeholder="Password" className="register-input" />
-          <button type="submit" className="register-btn">Register</button>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={submit}>
+      <h2>Register</h2>
+
+      <input
+        name="name"
+        placeholder="Name"
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={handleChange}
+        required
+      />
+
+      <button type="submit">Register</button>
+    </form>
   );
 }
 

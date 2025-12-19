@@ -1,83 +1,61 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 function PassengerDetails() {
   const { bookingId } = useParams();
   const navigate = useNavigate();
 
   const [booking, setBooking] = useState(null);
-  const [passengers, setPassengers] = useState([]);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(`booking-${bookingId}`));
-
+    const data = localStorage.getItem(`booking-${bookingId}`);
     if (!data) {
-      navigate("/searchbus");
+      navigate("/search");
       return;
     }
-
-    setBooking(data);
-
-    // ✅ EXACT passenger count = seats selected
-    setPassengers(
-      data.selectedSeats.map(seat => ({
-        seatNumber: seat,
-        name: "",
-        age: "",
-        gender: "",
-      }))
-    );
+    setBooking(JSON.parse(data));
   }, [bookingId, navigate]);
 
-  const handleChange = (index, field, value) => {
-    const updated = [...passengers];
-    updated[index][field] = value;
-    setPassengers(updated);
-  };
+  if (!booking) return <div>Loading...</div>;
 
-  const submitDetails = () => {
+  const submit = (e) => {
+    e.preventDefault();
+
     localStorage.setItem(
-      `passengers-${bookingId}`,
-      JSON.stringify(passengers)
+      `passenger-${bookingId}`,
+      JSON.stringify({
+        ...booking,
+        passenger: { name, age }
+      })
     );
-    alert("Booking successful!");
+
+    alert("Booking Confirmed!");
     navigate("/");
   };
-
-  if (!booking) return null;
 
   return (
     <div>
       <h2>Passenger Details</h2>
 
-      {passengers.map((p, i) => (
-        <div key={p.seatNumber} className="passenger-card">
-          <h4>Seat {p.seatNumber}</h4>
+      <form onSubmit={submit}>
+        <input
+          placeholder="Name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          required
+        />
 
-          <input
-            placeholder="Name"
-            value={p.name}
-            onChange={e => handleChange(i, "name", e.target.value)}
-          />
+        <input
+          placeholder="Age"
+          value={age}
+          onChange={e => setAge(e.target.value)}
+          required
+        />
 
-          <input
-            placeholder="Age"
-            value={p.age}
-            onChange={e => handleChange(i, "age", e.target.value)}
-          />
-
-          <select
-            value={p.gender}
-            onChange={e => handleChange(i, "gender", e.target.value)}
-          >
-            <option value="">Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-      ))}
-
-      <button onClick={submitDetails}>Confirm Booking</button>
+        <button type="submit">Confirm</button>
+      </form>
     </div>
   );
 }

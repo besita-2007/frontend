@@ -1,61 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form"; 
-import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
-  
-  const {
-    register, 
-    handleSubmit, 
-    formState: { errors }, 
-  } = useForm();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  const onSubmit = (data) => {
-    alert(`User Login Success for ${data.email}!`);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message); // backend sends message ONLY on error
+      return;
+    }
+
+    // ✅ SAVE TOKEN & USER
+    localStorage.setItem("userId", data.user.id);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    alert(`Welcome ${data.user.name}`);
     navigate("/searchbus");
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Login</h2>
-        
-        <form onSubmit={handleSubmit(onSubmit)}>
-          
-          <input 
-            type="email" 
-            placeholder="Email" 
-            className="login-input"
-            {...register("email", { 
-              required: "Email is required", 
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: "Invalid email address"
-              }
-            })}
-          />
-          {errors.email && <p className="error-message">{errors.email.message}</p>}
+    <form onSubmit={submit}>
+      <h2>Login</h2>
 
-          <input 
-            type="password" 
-            placeholder="Password" 
-            className="login-input"
-            {...register("password", { 
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters"
-              }
-            })}
-          />
-          {errors.password && <p className="error-message">{errors.password.message}</p>}
-          
-          <button type="submit" className="login-btn">Login</button>
-        </form>
-      </div>
-    </div>
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={handleChange}
+        required
+      />
+
+      <button type="submit">Login</button>
+    </form>
   );
 }
 
